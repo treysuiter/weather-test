@@ -82,9 +82,8 @@
 
             setResults(results) {
                 // TODO: Format the results
-                console.log(this.testResults, 'results')
-                this.testResults[0].innerHTML = (results || '').toString();
-                console.log(this.testResults, 'results');
+                console.log(results, 'results')
+                this.testResults[0].innerHTML =  `<p>Temp: ${results.main.temp}</p>`
             }
         }
     </script>
