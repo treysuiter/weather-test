@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>FreightWise Programming Test</title>
+
+    <!-- Moved Axios import before Test class declaration -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        'use strict';
+
+        /**
+         * Software Developer test.
+         *
+         * Doing research and making API calls are an important part of what we do at FreightWise.  This test will
+         * demonstrate your abilities to:
+         *
+         * - Make an API call
+         * - Research an API
+         * - Do basic DOM manipulation
+         * - Parse data
+         * - Handle errors
+         * - Be creative
+         *
+         * Feel free to ask any questions you may have.  Use a lot of comments, and explain why you are doing things.
+         * Don't spend more than 1-2 hours on it - we aren't expecting a finished product, but it should work and look
+         * nice.  Feel free to use any third party libraries, and if you do so, explain why you used them instead of
+         * built in browser APIs.
+         *
+         * Instructions:
+         * - Use the axios (https://github.com/axios/axios) request library to make an API call to the OpenWeatherMap
+         *   API for Current Weather Data using this API key:  25e989bd41e3e24ce13173d8126e0fd6
+         *   We've already imported this library to get you started.
+         * - Use either async/await or Promises.
+         * - Get the weather for Brentwood, TN, and write it to the DOM using the `setResults` method below.  Be
+         *   creative and make it look nice.
+         * - Handle errors and use the `setError` method below to display the error.  Also make it look nice.
+         * - If you find any mistakes in the test, fix them, and leave a comment about what you fixed and why.
+         * - Make sure your code is readable and maintainable.
+         * - Use plenty of descriptive comments.
+         * - Make sure your code runs in the latest version of Google Chrome and Firefox (ES6 is allowed).
+         * - Make your code live (GitHub with GitHub pages works nice).
+         * - Send a link to your finished test to hr+software@freightwisellc.com.
+         *
+         * If you have time, pick one of these:
+         * - Sign up for NewsAPI.org and get the Top Headlines and show them along with the weather.
+         * - Use the browser location API to get the user's current location, and show that location's weather.
+         * - Show a satellite map of the weather in Brentwood.
+         * - Request a user's phone number and send them an SMS with the weather.
+         */
+
+
+        class Test {
+            constructor() {
+                this.testResults = document.getElementsByClassName('test-results');
+            }
+
+            async run() {
+
+                //Not sure if you wanted me to leave this but will keep my mitts off just in case
+                console.log(new Date().toISOString(), '[Test]', 'Running the test');
+
+                //Set reference to API get request URL for Brentwood, TN USA
+                const url = 'https://api.openweathermap.org/data/2.5/weather?q=brentwood,tn,usa&appid=25e989bd41e3e24ce13173d8126e0fd6&units=imperial';
+
+                //Create function for getting API results, send results to setResults, and catching errors
+                const doWeather = async url => {
+                    try {
+                        const results = await axios.get(url);
+                        const weatherInfo = results.data;
+                        this.setResults(weatherInfo);
+                    } catch (error) {
+                        this.setError(error);
+                    }
+                }
+                doWeather(url);
+            }
+
+            setError(message) {
+                //Set testResults index to 0
+                //(Was not sure how to make this work with the previous code so I kinda did my own thing)
+                
+                //Create HTML element for errors
+                this.testResults[0].innerHTML = `<div class="error-code"><p>${message}</p><p>Please alert an adult.</p></div>`
+            }
+
+            setResults(results) {
+                //Set test results index to 0
+                //Once again, kinda did my own thing
+                //Probably should have rounded the temps up or down but decided to call it before I went too far down the "code hole" on this.
+
+                //Create HTML element for weather info
+
+                //Set reference to weather icon
+                let icon = `http://openweathermap.org/img/wn/${results.weather[0].icon}@2x.png`
+                this.testResults[0].innerHTML = `
+                <div class="weather-container">
+                    <div class="wc-left">
+                        <p>Temp: ${results.main.temp}&deg</p>
+                        <p>Feels like: ${results.main.feels_like}&deg</p>
+                        <p>Humidity: ${results.main.humidity}%</p>
+                        <p>Cloud Cover: ${results.clouds.all}%</p>
+                    </div>
+                    <div class="wc-right">
+                        <img src="${icon}">
+                    </div>
+                </div>
+                `
+            }
+        }
+    </script>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+          }
+          
+          body {
+            font-family: 'Roboto', sans-serif;
+            background: lightblue;
+            background-image: url("/images/bg.jpg");
+          }
+
+        .error-code {
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            width: 355px;
+            height: 125px;
+            margin: 25px auto;
+            background-color: lightcoral;
+            border-radius: 9px;
+            padding: 25px;
+            padding-right: 30px;
+            box-shadow: 0px 31px 35px -26px #080c21;
+        }
+
+        .weather-container {
+            
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            width: 355px;
+            height: 125px;
+            margin: 25px auto;
+            background-color: lightgrey;
+            border-radius: 9px;
+           
+            padding-right: 30px;
+            box-shadow: 0px 31px 35px -26px #080c21;
+        }
+
+        .wc-right {
+            width: 125px;
+            margin-left: 50px;
+        }
+
+        .wc-left {
+            width: 200px;
+            margin-left: 25px;
+        }
+
+        .wc-left > p {
+            margin: 10px;
+        }
+
+
+        .button-container {
+            text-align: center;
+            margin: 25px auto;
+        }
+
+        .button-container>button {
+            margin: 0;
+            padding: 10px 18px;
+            color: white;
+            background-color: #008000;
+            border: none;
+            border-radius: 3px;
+            transition: all 200ms ease-in-out;
+            font-size: 14px;
+        }
+
+        .button-container>button:hover {
+            background-color: #00A000;
+        }
+
+        .button-container>button:active {
+            background-color: #006000;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="test-results"></div>
+
+    <div class="button-container"></div>
+
+    <script>
+        'use strict';
+
+        /**
+         * Creates a button for kicking off the test and adds it to the DOM.
+         *
+         * @param {HTMLElement} context  the parent element to add the button to
+         * @param {Test}        test     the test to be executed
+         * @returns {HTMLElement} the button added to the test
+         */
+        function addButtonForTest(context, test) {
+            let testButton = document.createElement('button');
+
+            testButton.type = 'button';
+            testButton.innerText = 'Get the Brentwood, TN Weather';
+            testButton.onclick = () => test.run()
+            context.appendChild(testButton);
+
+            return testButton;
+        }
+
+        // Create the Test and add a button to the UI for running the test
+        const test = new Test();
+        const buttonContainer = document.getElementsByClassName('button-container')[0];
+
+        addButtonForTest(buttonContainer, test);
+    </script>
+</body>
+
+</html>
