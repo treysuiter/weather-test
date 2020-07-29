@@ -60,12 +60,14 @@
             }
 
             async run() {
+
+                //Not sure if you wanted me to leave this but will keep my mitts off just in case
                 console.log(new Date().toISOString(), '[Test]', 'Running the test');
 
                 //Set reference to API get request URL for Brentwood, TN USA
                 const url = 'https://api.openweathermap.org/data/2.5/weather?q=brentwood,tn,usa&appid=25e989bd41e3e24ce13173d8126e0fd6&units=imperial';
 
-                //Return get request
+                //Create function for getting API results, send results to setResults, and catching errors
                 const doWeather = async url => {
                     try {
                         const results = await axios.get(url);
@@ -75,21 +77,25 @@
                         this.setError(error);
                     }
                 }
-
                 doWeather(url);
-
-                // TODO: Make the API call and handle the results
             }
 
             setError(message) {
-                // TODO: Format the error
-                //Set test results index to 0
-                this.testResults[0].innerHTML = `<div class="error-code"><p>${message}</p></div>`
+                //Set testResults index to 0
+                //(Was not sure how to make this work with the previous code so I kinda did my own thing)
+                
+                //Create HTML element for errors
+                this.testResults[0].innerHTML = `<div class="error-code"><p>${message}</p><p>Please alert an adult.</p></div>`
             }
 
             setResults(results) {
-                // TODO: Format the results
                 //Set test results index to 0
+                //Once again, kinda did my own thing
+                //Probably should have rounded the temps up or down but decided to call it before I went too far down the "code hole" on this.
+
+                //Create HTML element for weather info
+
+                //Set reference to weather icon
                 let icon = `http://openweathermap.org/img/wn/${results.weather[0].icon}@2x.png`
                 this.testResults[0].innerHTML = `
                 <div class="weather-container">
@@ -123,6 +129,7 @@
           }
 
         .error-code {
+            font-weight: bold;
             text-align: center;
             position: relative;
             width: 355px;
@@ -197,8 +204,6 @@
     <div class="test-results"></div>
 
     <div class="button-container"></div>
-
-
 
     <script>
         'use strict';
