@@ -17,7 +17,7 @@
 
     <div class="button-container"></div>
 
-    <!-- Moved all script tags to bottom of page for best practice in regard to load -->
+    <!-- Moved all script tags to bottom of page for best practice in regard to loading -->
 
     <!-- Moved Axios import before Test class declaration -->
 
@@ -77,10 +77,10 @@
                 //Not sure if you wanted me to leave this but will keep my mitts off just in case
                 console.log(new Date().toISOString(), '[Test]', 'Running the test');
 
-                //Set reference to API get request URL for Brentwood, TN USA
+                //Set reference to API get request URL for Brentwood, TN USA with units in Fahrenheit 
                 const url = 'https://api.openweathermap.org/data/2.5/weather?q=brentwood,tn,usa&appid=25e989bd41e3e24ce13173d8126e0fd6&units=imperial';
 
-                //Create function for getting API results, send results to setResults, and catching errors
+                //Create function for getting API results, sending results to setResults, and catching errors
                 const doWeather = async url => {
                     try {
                         const results = await axios.get(url);
